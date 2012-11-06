@@ -45,7 +45,6 @@
     cpFloat height = self.frame.size.height;
 
     _space = [[PAPhysicalAnimation alloc] init];
-    _space.animationUpdate = self;
     
     _body = [ChipmunkBody bodyWithMass:mass andMoment:cpMomentForBox(mass, width, height)];
     _body.pos = self.center;
@@ -57,6 +56,20 @@
     [_space add:_shape];
     
     [_space startAnimation];
+    
+    [_space handleAnimationForBody:_body
+                       updateBlock:^(CGPoint center, CGFloat angle) {
+
+                           self.transform = CGAffineTransformRotate(CGAffineTransformIdentity, angle);
+                           
+                           CGPoint vCenter = (_nowTouching) ? [self.superview convertPoint:center fromView:_spaceView] : center;
+                           self.center = vCenter;
+                           
+                           if (vCenter.y > 1000)
+                               [self moveOut];
+                           else if (_body.kineticEnergy <= 0.0001 && !_nowTouching)
+                               [_space stopAnimation], _space = nil, _body = nil, _shape = nil;
+                       }];
 }
 
 - (CGPoint)offsetPoint:(CGPoint)offset
@@ -95,15 +108,12 @@
 
 - (void)moveOut
 {
-    [self removeFromSuperview];
-    
-    [_space stopAnmation];
-    _space = nil;
-    _body = nil;
-    _shape = nil;
+    [_space stopAnimation], _space = nil, _body = nil, _shape = nil;
     
     if ([_delegate respondsToSelector:@selector(stackPicViewDidMovedOut:)])
         [self performSelectorOnMainThread:@selector(stackPicViewDidMovedOut) withObject:nil waitUntilDone:YES];
+
+    [self removeFromSuperview];
 }
 
 - (CGFloat)distanceFormPoint:(CGPoint)point1 toPoint:(CGPoint)point2
@@ -171,32 +181,6 @@
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [_space touchesCancelled:touches inView:_spaceView];
-}
-
-#pragma mark - WPPhysicalAnimationUpdate
-
-- (void)updateBody:(ChipmunkBody *)body
-            center:(CGPoint)newCenter
-             angle:(CGFloat)newAngle
-{
-    if (body != _body)
-        return;
-    
-    self.transform = CGAffineTransformRotate(CGAffineTransformIdentity, newAngle);
-    
-    CGPoint center = (_nowTouching) ? [self.superview convertPoint:newCenter fromView:_spaceView] : newCenter;
-    self.center = center;
-    
-    if (newCenter.y > 1000)
-        [self moveOut];
-    
-    if (_body.kineticEnergy <= 0.0001 && !_nowTouching)
-    {
-        [_space stopAnmation];
-        _space = nil;
-        _body = nil;
-        _shape = nil;
-    }
 }
 
 @end

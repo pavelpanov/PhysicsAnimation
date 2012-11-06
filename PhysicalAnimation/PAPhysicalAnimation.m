@@ -31,6 +31,9 @@
 	NSTimeInterval _lastTime, _lastFrameTime, _lastUpdateTicksTime;
     
     int _physicsTicks, _updateTicks;
+    
+    ChipmunkBody *_updateBody;
+    UpdateBlockType _updateBlock;
 }
 
 @property (nonatomic, readonly) NSUInteger ticks;
@@ -52,8 +55,6 @@
 @end
 
 @implementation PAPhysicalAnimation
-
-@synthesize animationUpdate = _animationUpdate;
 
 @synthesize touchTransform = _touchTransform;
 @synthesize space = _space;
@@ -103,6 +104,13 @@
 	return self;
 }
 
+- (void)handleAnimationForBody:(ChipmunkBody *)body
+                   updateBlock:(UpdateBlockType)updateBlock
+{
+    _updateBody = body;
+    _updateBlock = updateBlock;
+}
+
 - (void)startAnimation
 {
 	_displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];
@@ -110,8 +118,11 @@
 	[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
 }
 
-- (void)stopAnmation
+- (void)stopAnimation
 {
+    _updateBody = nil;
+    _updateBlock = nil;
+    
     [_displayLink invalidate], _displayLink = nil;
 }
 
@@ -157,7 +168,7 @@
         
         BOOL needs_sync = (time - _lastFrameTime > MAX_DT);
         if (needs_sync) {
-            [self animationDidUpdate];
+            [self performSelectorOnMainThread:@selector(animationDidUpdate) withObject:nil waitUntilDone:YES];
             
             _updateTicks++;
             if (_updateTicks == 30)
@@ -176,15 +187,14 @@
 
 - (void)animationDidUpdate
 {
-	for (ChipmunkBody *body in _space.bodies)
+    if (_updateBody && _updateBlock && [_space.bodies containsObject:_updateBody])
     {
-        cpBody *cbody = body.body;
+        cpBody *cbody = _updateBody.body;
         cpVect pos = cpvadd(cbody->p, cpvmult(cbody->v, _accumulator));
         float ang = cbody->a + cbody->w*_accumulator;
         
-        if ([_animationUpdate respondsToSelector:@selector(updateBody:center:angle:)])
-            [_animationUpdate updateBody:body center:pos angle:ang];
-	}
+        _updateBlock(pos, ang);
+    }
 }
 
 #pragma mark Touches

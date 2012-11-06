@@ -15,7 +15,7 @@
 
 @protocol WPStackPicViewDelegate;
 
-@interface PAStackPicView : UIView <WPPhysicalAnimationUpdate>
+@interface PAStackPicView : UIView
 {
     __weak id<WPStackPicViewDelegate> _delegate;
 }

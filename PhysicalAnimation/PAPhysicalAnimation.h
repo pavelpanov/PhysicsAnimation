@@ -9,20 +9,18 @@
 #import <Foundation/Foundation.h>
 #import "ObjectiveChipmunk.h"
 
-@protocol WPPhysicalAnimationUpdate;
+typedef void (^UpdateBlockType)(CGPoint center, CGFloat angle);
 
 @interface PAPhysicalAnimation : NSObject
-{
-    __weak id<WPPhysicalAnimationUpdate> _animationUpdate;
-}
 
 @property (nonatomic, readonly) ChipmunkSpace *space;
 @property (nonatomic, readonly) ChipmunkBody *staticBody;
 
-@property (nonatomic, weak) id<WPPhysicalAnimationUpdate> animationUpdate;
-
 - (void)startAnimation;
-- (void)stopAnmation;
+- (void)stopAnimation;
+
+- (void)handleAnimationForBody:(ChipmunkBody *)body
+                   updateBlock:(UpdateBlockType)updateBlock;
 
 - (id)add:(NSObject<ChipmunkObject> *)obj;
 - (id)remove:(NSObject<ChipmunkObject> *)obj;
@@ -34,13 +32,5 @@
 
 @end
 
-
-@protocol WPPhysicalAnimationUpdate <NSObject>
-
-- (void)updateBody:(ChipmunkBody *)body
-            center:(CGPoint)newCenter
-             angle:(CGFloat)newAngle;
-
-@end
 
 

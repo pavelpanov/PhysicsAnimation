@@ -40,7 +40,6 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{12, 11}, {106, 106}}</string>
 						<reference key="NSSuperview" ref="159453864"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="792249413"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -59,8 +58,6 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{12, 11}, {106, 106}}</string>
 						<reference key="NSSuperview" ref="159453864"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:567</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
@@ -75,7 +72,6 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrameSize">{128, 128}</string>
 						<reference key="NSSuperview" ref="159453864"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="563624193"/>
 						<string key="NSReuseIdentifierKey">_NS:567</string>
 						<int key="IBUIContentMode">4</int>
@@ -90,7 +86,6 @@
 				</array>
 				<string key="NSFrameSize">{128, 128}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="955683035"/>
 				<string key="NSReuseIdentifierKey">_NS:196</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
@@ -211,10 +206,6 @@
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
-		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
-			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
-			<real value="1536" key="NS.object.0"/>
-		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
