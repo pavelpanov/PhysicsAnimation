@@ -7,7 +7,7 @@
 //
 
 
-#import "PAPhysicalAnimation.h"
+#import "PAPhysicsAnimation.h"
 
 #import "ChipmunkHastySpace.h"
 
@@ -18,7 +18,7 @@
 
 #define GRABABLE_MASK_BIT (1<<31)
 
-@interface PAPhysicalAnimation() {
+@interface PAPhysicsAnimation() {
 	ChipmunkHastySpace *_space;
 	ChipmunkMultiGrab *_multiGrab;
 	
@@ -54,7 +54,7 @@
 
 @end
 
-@implementation PAPhysicalAnimation
+@implementation PAPhysicsAnimation
 
 @synthesize touchTransform = _touchTransform;
 @synthesize space = _space;

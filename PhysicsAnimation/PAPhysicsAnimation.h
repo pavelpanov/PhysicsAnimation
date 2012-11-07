@@ -11,7 +11,7 @@
 
 typedef void (^UpdateBlockType)(CGPoint center, CGFloat angle);
 
-@interface PAPhysicalAnimation : NSObject
+@interface PAPhysicsAnimation : NSObject
 
 @property (nonatomic, readonly) ChipmunkSpace *space;
 @property (nonatomic, readonly) ChipmunkBody *staticBody;

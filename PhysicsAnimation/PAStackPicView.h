@@ -7,7 +7,7 @@
 //
 
 #import "PAStackPicView.h"
-#import "PAPhysicalAnimation.h"
+#import "PAPhysicsAnimation.h"
 
 #import "ChipmunkBody.h"
 

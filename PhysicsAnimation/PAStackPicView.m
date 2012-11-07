@@ -12,7 +12,7 @@
 
 @interface PAStackPicView ()
 {
-    PAPhysicalAnimation *_space;
+    PAPhysicsAnimation *_space;
     ChipmunkBody *_body;
     ChipmunkShape *_shape;
     
@@ -44,7 +44,7 @@
     cpFloat width = self.frame.size.width;
     cpFloat height = self.frame.size.height;
 
-    _space = [[PAPhysicalAnimation alloc] init];
+    _space = [[PAPhysicsAnimation alloc] init];
     
     _body = [ChipmunkBody bodyWithMass:mass andMoment:cpMomentForBox(mass, width, height)];
     _body.pos = self.center;
